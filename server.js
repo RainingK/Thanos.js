@@ -32,18 +32,38 @@ app.post('/', upload.array('files', 20) ,function(req, res, next) {
 	var files = fs.readdirSync(upload_directory);
 	// console.log(files[0]);
 
-	// var randomNumbers = []
+	var randomNumbers = []
+	// var randomNum = Math.floor(Math.random() * files.length)
+
+	// FIXME: Only works for even files at the moment.
+	for (let index = 0; index < files.length / 2; index++) {
+		var randomNum = Math.floor(Math.random() * files.length)
+
+		// Makes sure that the array does not have the number so as not to repeat it.
+		if (randomNumbers.includes(randomNum)) {
+			index--;
+			continue;
+		}
+
+		randomNumbers.push(randomNum)
+	}
+	
+	console.log(randomNumbers);
+	
 
     // Download the Uploads folder
     var zip = new AdmZip();
-    zip.addLocalFolder(upload_directory)
+	// zip.addLocalFolder(upload_directory)
+	for (let index = 0; index < randomNumbers.length; index++) {
+		zip.addLocalFile(upload_directory + '/' + files[randomNumbers[index]])
+	}
     zip_file = zip.toBuffer()
     const downloadName = 'I Am Inevitable.zip';
     res.set('Content-Type', 'application/octet-stream');
     res.set('Content-Disposition', `attachment; filename=${downloadName}`);
     res.set('Content-Length', zip_file.length);
 	// res.send(zip_file)
-	// zip.writeZip(downloadsFolder() + '/I Am Inevitable.zip')
+	zip.writeZip(downloadsFolder() + '/I Am Inevitable.zip')
 	
 
     // Deletes the files in the directory once everything is done.
