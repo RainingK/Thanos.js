@@ -3,6 +3,7 @@ const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
 const AdmZip = require('adm-zip');
+const downloadsFolder = require('downloads-folder');
 
 const app = express();
 const upload_directory = __dirname + '\\uploads';
@@ -28,6 +29,11 @@ app.get('/', function(req, res) {
 
 // Maximum 20 Files Can Be Uploaded At A Time
 app.post('/', upload.array('files', 20) ,function(req, res, next) {
+	var files = fs.readdirSync(upload_directory);
+	// console.log(files[0]);
+
+	// var randomNumbers = []
+
     // Download the Uploads folder
     var zip = new AdmZip();
     zip.addLocalFolder(upload_directory)
@@ -36,7 +42,9 @@ app.post('/', upload.array('files', 20) ,function(req, res, next) {
     res.set('Content-Type', 'application/octet-stream');
     res.set('Content-Disposition', `attachment; filename=${downloadName}`);
     res.set('Content-Length', zip_file.length);
-    res.send(zip_file)
+	// res.send(zip_file)
+	// zip.writeZip(downloadsFolder() + '/I Am Inevitable.zip')
+	
 
     // Deletes the files in the directory once everything is done.
     fs.readdir(upload_directory, (err, files) => {
