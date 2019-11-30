@@ -30,21 +30,34 @@ app.get('/', function(req, res) {
 // Maximum 20 Files Can Be Uploaded At A Time
 app.post('/', upload.array('files', 20) ,function(req, res, next) {
 	var files = fs.readdirSync(upload_directory);
-	// console.log(files[0]);
 
 	var randomNumbers = []
-	// var randomNum = Math.floor(Math.random() * files.length)
 
-	// FIXME: Only works for even files at the moment.
-	for (let index = 0; index < files.length / 2; index++) {
+	// This means there are odd files.
+	if (files.length % 2 != 0) {
+
+		// This is to random decide whether to delete an extra file or not.
+		var extra = Math.floor(Math.random() * 2);
+		
+		if (extra == 1) {
+			fileSize = Math.floor((files.length / 2));
+		} else {
+			fileSize = Math.ceil(files.length / 2);
+		}
+	} else {
+		fileSize = files.length / 2;
+	}
+	
+
+	for (let index = 0; index < fileSize; index++) {
 		var randomNum = Math.floor(Math.random() * files.length)
-
+		
 		// Makes sure that the array does not have the number so as not to repeat it.
 		if (randomNumbers.includes(randomNum)) {
 			index--;
 			continue;
 		}
-
+		
 		randomNumbers.push(randomNum)
 	}
 	
