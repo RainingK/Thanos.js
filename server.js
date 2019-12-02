@@ -3,7 +3,7 @@ const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
 const AdmZip = require('adm-zip');
-const downloadsFolder = require('downloads-folder');
+// const downloadsFolder = require('downloads-folder');
 
 const app = express();
 const upload_directory = __dirname + '\\uploads';
@@ -61,7 +61,7 @@ app.post('/', upload.array('files', 20) ,function(req, res, next) {
 		randomNumbers.push(randomNum)
 	}
 	
-	console.log(randomNumbers);
+	// console.log(randomNumbers);
 	
 
     // Download the Uploads folder
@@ -74,23 +74,24 @@ app.post('/', upload.array('files', 20) ,function(req, res, next) {
     const downloadName = 'I Am Inevitable.zip';
     res.set('Content-Type', 'application/octet-stream');
     res.set('Content-Disposition', `attachment; filename=${downloadName}`);
-    res.set('Content-Length', zip_file.length);
-	// res.send(zip_file)
-	zip.writeZip(downloadsFolder() + '/I Am Inevitable.zip')
+	res.set('Content-Length', zip_file.length);
 	
+	// Deletes the files in the directory once everything is done.
+	fs.readdir(upload_directory, (err, files) => {
+		if (err) throw err;
+		
+		for (const file of files) {
+		fs.unlink(path.join(upload_directory, file), err => {
+			if (err) throw err;
+		});
+		}
+	});
 
-    // Deletes the files in the directory once everything is done.
-    fs.readdir(upload_directory, (err, files) => {
-        if (err) throw err;
-        
-        for (const file of files) {
-          fs.unlink(path.join(upload_directory, file), err => {
-            if (err) throw err;
-          });
-        }
-    });
+	// Downloads the files.
+	res.send(zip_file)
+	// zip.writeZip(downloadsFolder() + '/I Am Inevitable.zip')
 
-    res.redirect('/')
+    // res.redirect(req.get('referer'));
 })
 
 app.listen(port, function(){
