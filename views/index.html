@@ -6,11 +6,15 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Compress Your Files With Thanos.js</title>
     <link rel="icon" href="/img/infinity-gauntlet-favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <form action="/" method="POST" enctype="multipart/form-data">
-        <input type="file" name="files" multiple>
-        <button type="submit">Compress</button>
-    </form>
+    <div id="drop-area">
+        <form action="/" method="POST" enctype="multipart/form-data" class="file-form">
+            <p>Upload 1 or multiple files</p>
+            <input id="fileElem" onchange="handleFiles(this.files)" type="file" name="files" multiple>
+            <button class="button" type="submit">Compress</button>
+        </form>
+    </div>
 </body>
 </html>
