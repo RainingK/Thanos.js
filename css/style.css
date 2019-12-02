@@ -1,3 +1,13 @@
+body {
+    background-color: #6F3C89;
+}
+
+.heading {
+    font-family: sans-serif;
+    font-size: 40px;
+    text-align: center;
+}
+
 #drop-area {
     border: 2px dashed #ccc;
     border-radius: 20px;
@@ -6,35 +16,30 @@
     margin: 100px auto;
     padding: 20px;
 }
+
 #drop-area.highlight {
     border-color: purple;
 }
+
 p {
     margin-top: 0;
+    text-align: center;
 }
+
 .file-form {
     margin-bottom: 10px;
 }
-#gallery {
-    margin-top: 10px;
-}
-#gallery img {
-    width: 150px;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    vertical-align: middle;
-}
+
 .button {
     display: inline-block;
     padding: 10px;
-    background: #ccc;
+    background: #6F3C89;
     cursor: pointer;
     border-radius: 5px;
-    border: 1px solid #ccc;
+    border: none;
+    /* border: 1px solid #ccc; */
 }
+
 .button:hover {
-    background: #ddd;
-}
-#fileElem {
-    display: none;
+    background: #1B2B42;
 }

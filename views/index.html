@@ -9,12 +9,18 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <div class="heading">
+        <h1>Thanos.js</h1>
+    </div>
+
     <div id="drop-area">
         <form action="/" method="POST" enctype="multipart/form-data" class="file-form">
             <p>Upload 1 or multiple files</p>
-            <input id="fileElem" onchange="handleFiles(this.files)" type="file" name="files" multiple>
+            <input class="button" id="fileElem" onchange="handleFiles(this.files)" type="file" name="files" multiple>
             <button class="button" type="submit">Compress</button>
         </form>
     </div>
+
+    <script src="/js/formHandler.js"></script>
 </body>
 </html>
